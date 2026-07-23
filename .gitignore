@@ -1,0 +1,10 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# CMS Dynamic Folders
+uploads/
+
+# Agent Scratch / Temp files
+.scratch/
+*.log
