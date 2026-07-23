@@ -634,8 +634,7 @@ p {
 }
 
 .pro-link:hover {
-    color: var(--primary-dark);
-    gap: 12px;
+    color: var(--accent);
 }
 
 /* TESTIMONIAL */
