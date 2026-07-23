@@ -172,6 +172,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $data['mentors'] = $mentors;
     }
 
+    // Handle Testimonials Array
+    if (isset($_POST['testimonial_name']) && is_array($_POST['testimonial_name'])) {
+        $testimonials = [];
+        $count = count($_POST['testimonial_name']);
+        for ($i = 0; $i < $count; $i++) {
+            $testimonials[] = [
+                'name' => stripslashes($_POST['testimonial_name'][$i]),
+                'role' => stripslashes($_POST['testimonial_role'][$i]),
+                'quote' => stripslashes($_POST['testimonial_quote'][$i])
+            ];
+        }
+        $data['testimonials'] = $testimonials;
+    }
+
     // Save data.json
     file_put_contents($data_file, json_encode($data, JSON_PRETTY_PRINT));
 
@@ -198,6 +212,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         }
     }
     $template = str_replace('{{mentors_html}}', $mentors_html, $template);
+
+    // Generate Testimonials HTML
+    $testimonials_html = '';
+    if (isset($data['testimonials']) && is_array($data['testimonials'])) {
+        foreach ($data['testimonials'] as $testi) {
+            $testimonials_html .= '
+                    <div class="glass-card testimonial-card">
+                        <div class="stars mb-2" style="color: var(--secondary);"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p>' . $testi['quote'] . '</p>
+                        <div class="author-info mt-3">
+                            <div class="fw-bold" style="color: var(--primary);">' . $testi['name'] . '</div>
+                            <div class="text-sm">' . $testi['role'] . '</div>
+                        </div>
+                    </div>';
+        }
+    }
+    $template = str_replace('{{testimonials_html}}', $testimonials_html, $template);
 
     foreach ($data as $key => $value) {
         if (is_array($value))
@@ -665,15 +696,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 <div id="group-testimonial" class="section-group">
                     <h3 class="section-title">Testimonial</h3>
 
-                    <h4 style="margin-top:1rem;">Testimonial 1</h4>
-                    <?php renderInput($data, 'testi_1_name', 'Nama'); ?>
-                    <?php renderInput($data, 'testi_1_role', 'Jabatan / Pekerjaan'); ?>
-                    <?php renderTextarea($data, 'testi_1_quote', 'Isi Testimonial'); ?>
-
-                    <h4 style="margin-top:2rem;">Testimonial 2</h4>
-                    <?php renderInput($data, 'testi_2_name', 'Nama'); ?>
-                    <?php renderInput($data, 'testi_2_role', 'Jabatan / Pekerjaan'); ?>
-                    <?php renderTextarea($data, 'testi_2_quote', 'Isi Testimonial'); ?>
+                    <div id="testimonial-container">
+                        <?php
+                        if (isset($data['testimonials']) && is_array($data['testimonials'])) {
+                            foreach ($data['testimonials'] as $index => $testi) {
+                                ?>
+                                <div class="mentor-item" style="border:1px solid #cbd5e1; padding:1.5rem; margin-bottom:1rem; border-radius:8px; position:relative;">
+                                    <button type="button" class="btn-remove" onclick="this.parentElement.remove()" style="position:absolute; top:10px; right:10px; background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;"><i class="fa-solid fa-trash"></i> Hapus</button>
+                                    
+                                    <div class="form-group">
+                                        <label>Nama</label>
+                                        <input type="text" class="form-control" name="testimonial_name[]" value="<?php echo htmlspecialchars($testi['name']); ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Jabatan / Pekerjaan</label>
+                                        <input type="text" class="form-control" name="testimonial_role[]" value="<?php echo htmlspecialchars($testi['role']); ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Isi Testimonial</label>
+                                        <textarea class="form-control" name="testimonial_quote[]" required><?php echo htmlspecialchars($testi['quote']); ?></textarea>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <button type="button" class="btn-add" onclick="addTestimonial()" style="margin-top:1rem;"><i class="fa-solid fa-plus"></i> Tambah Testimonial</button>
                 </div>
 
                 <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
@@ -707,6 +756,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 }
                 reader.readAsDataURL(input.files[0]);
             }
+        }
+
+        function addTestimonial() {
+            const container = document.getElementById('testimonial-container');
+            const html = `
+                <div class="mentor-item" style="border:1px solid #cbd5e1; padding:1.5rem; margin-bottom:1rem; border-radius:8px; position:relative;">
+                    <button type="button" class="btn-remove" onclick="this.parentElement.remove()" style="position:absolute; top:10px; right:10px; background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;"><i class="fa-solid fa-trash"></i> Hapus</button>
+                    
+                    <div class="form-group">
+                        <label>Nama</label>
+                        <input type="text" class="form-control" name="testimonial_name[]" value="" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Jabatan / Pekerjaan</label>
+                        <input type="text" class="form-control" name="testimonial_role[]" value="" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Isi Testimonial</label>
+                        <textarea class="form-control" name="testimonial_quote[]" required></textarea>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
         }
     </script>
 

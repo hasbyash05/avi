@@ -96,10 +96,16 @@
   "img_jurnal_logo": "https://placehold.co/150",
   "img_book_logo": "https://placehold.co/150",
   "img_fablab_logo": "https://placehold.co/150",
-  "testi_1_name": "Budi Santoso",
-  "testi_1_role": "Dosen Universitas Negeri",
-  "testi_1_quote": "Sangat membantu dalam memahami metodologi penelitian. Mentor sangat sabar dan menguasai materi secara mendalam.",
-  "testi_2_name": "Sari Wulandari",
-  "testi_2_role": "Peneliti Akademik",
-  "testi_2_quote": "Berkat mentoring dari Aksara Vidya, artikel ilmiah saya akhirnya berhasil dipublikasikan di jurnal bereputasi tinggi."
+  "testimonials": [
+    {
+      "name": "Budi Santoso",
+      "role": "Dosen Universitas Negeri",
+      "quote": "Sangat membantu dalam memahami metodologi penelitian. Mentor sangat sabar dan menguasai materi secara mendalam."
+    },
+    {
+      "name": "Sari Wulandari",
+      "role": "Peneliti Akademik",
+      "quote": "Berkat mentoring dari Aksara Vidya, artikel ilmiah saya akhirnya berhasil dipublikasikan di jurnal bereputasi tinggi."
+    }
+  ]
 }
