@@ -84,6 +84,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
                 font-size: 0.9em;
             }
         </style>
+        <link rel="icon" type="image/png" href="logo.png">
     </head>
 
     <body>
@@ -411,6 +412,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             transition: 0.2s;
         }
     </style>
+    <link rel="icon" type="image/png" href="logo.png">
 </head>
 
 <body>
