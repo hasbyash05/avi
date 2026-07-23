@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=$HOME/aksaravidyaindonesia.com/
+    - export DEPLOYPATH=$HOME/public_html/aksaravidyaindonesia.com/
     - /bin/cp -R * $DEPLOYPATH
