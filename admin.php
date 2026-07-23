@@ -8,7 +8,7 @@ $upload_dir = 'uploads/';
 
 // --- 1. Login Handling ---
 if (isset($_POST['password'])) {
-    if ($_POST['password'] === 'admin123') {
+    if (hash('sha256', $_POST['password']) === '715bce074fd046600e81a27a1f80a3cf6b1a6ed934aeac273480c1f6496a924a') {
         $_SESSION['admin_logged_in'] = true;
         header("Location: admin.php");
         exit;
@@ -93,7 +93,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
             <?php if (isset($login_error))
                 echo "<div class='error'>$login_error</div>"; ?>
             <form method="POST">
-                <input type="password" name="password" placeholder="Password (admin123)" required>
+                <input type="password" name="password" placeholder="Password" required>
                 <button type="submit">Login</button>
             </form>
         </div>
