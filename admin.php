@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     // Update text data
     foreach ($_POST as $key => $value) {
-        if ($key !== 'action' && array_key_exists($key, $data)) {
+        if ($key !== 'action') {
             $data[$key] = stripslashes($value);
         }
     }
@@ -436,6 +436,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <a href="#" onclick="showGroup('layanan', this)">Layanan</a>
                     <a href="#" onclick="showGroup('program', this)">Program</a>
                     <a href="#" onclick="showGroup('mentor', this)">Mentor</a>
+                    <a href="#" onclick="showGroup('testimonial', this)">Testimonial</a>
                     <a href="#" onclick="showGroup('statistik', this)">Statistik & CTA</a>
                 </div>
             </div>
@@ -658,6 +659,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <h4 style="margin-top:2rem;">Call To Action (Kontak)</h4>
                     <?php renderInput($data, 'cta_title', 'Judul Aakan (CTA)'); ?>
                     <?php renderTextarea($data, 'cta_desc', 'Teks Ajakan'); ?>
+                </div>
+
+                <!-- TESTIMONIAL -->
+                <div id="group-testimonial" class="section-group">
+                    <h3 class="section-title">Testimonial</h3>
+
+                    <h4 style="margin-top:1rem;">Testimonial 1</h4>
+                    <?php renderInput($data, 'testi_1_name', 'Nama'); ?>
+                    <?php renderInput($data, 'testi_1_role', 'Jabatan / Pekerjaan'); ?>
+                    <?php renderTextarea($data, 'testi_1_quote', 'Isi Testimonial'); ?>
+
+                    <h4 style="margin-top:2rem;">Testimonial 2</h4>
+                    <?php renderInput($data, 'testi_2_name', 'Nama'); ?>
+                    <?php renderInput($data, 'testi_2_role', 'Jabatan / Pekerjaan'); ?>
+                    <?php renderTextarea($data, 'testi_2_quote', 'Isi Testimonial'); ?>
                 </div>
 
                 <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
