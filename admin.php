@@ -458,9 +458,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <?php renderInput($data, 'footer_desc', 'Teks Deskripsi Footer'); ?>
                     <?php renderInput($data, 'footer_copyright', 'Copyright Footer'); ?>
 
-                    <h4 style="margin-top:2rem;">Logo & Gambar Utama</h4>
+                    <h4 style="margin-top:2rem;">Logo Utama</h4>
                     <?php renderImageUpload($data, 'img_logo', 'Logo Header (Terang)'); ?>
-                    <?php renderImageUpload($data, 'img_skillup_logo', 'Logo SkillUp Academy'); ?>
                 </div>
 
                 <!-- BERANDA (HERO) -->
@@ -496,6 +495,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <h3 class="section-title">Layanan Perusahaan</h3>
                     <?php renderInput($data, 'layanan_title', 'Judul Utama'); ?>
                     <?php renderTextarea($data, 'layanan_desc', 'Deskripsi'); ?>
+
+                    <h4 style="margin-top:2rem;">Logo Layanan</h4>
+                    <?php renderImageUpload($data, 'img_jurnal_logo', 'Logo Aksara Jurnal'); ?>
+                    <?php renderImageUpload($data, 'img_skillup_logo', 'Logo SkillUp Academy'); ?>
+                    <?php renderImageUpload($data, 'img_book_logo', 'Logo Aksara Book'); ?>
+                    <?php renderImageUpload($data, 'img_fablab_logo', 'Logo Aksara Fablab'); ?>
 
                     <h4 style="margin-top:2rem;">Layanan 1</h4>
                     <?php renderInput($data, 'layanan_1_title', 'Nama Layanan'); ?>
