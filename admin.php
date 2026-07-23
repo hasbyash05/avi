@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     // Update text data
     foreach ($_POST as $key => $value) {
-        if ($key !== 'action') {
+        if ($key !== 'action' && !is_array($value)) {
             $data[$key] = stripslashes($value);
         }
     }
