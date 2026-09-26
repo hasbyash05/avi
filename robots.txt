@@ -1,0 +1,10 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://aksaravidyaindonesia.com/sitemap.xml
+
+Disallow: /admin.php
+Disallow: /data.json
+Disallow: /template.html
+Disallow: /.cpanel.yml
+Disallow: /.scratch/
