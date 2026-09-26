@@ -143,9 +143,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         }
     }
 
-
-
-
+    // Handle Hero Images Array
+    if (isset($_POST['existing_hero_img']) && is_array($_POST['existing_hero_img'])) {
+        $hero_images = [];
+        $count = count($_POST['existing_hero_img']);
+        for ($i = 0; $i < $count; $i++) {
+            $bg_img = $_POST['existing_hero_img'][$i];
+            // Check if new file uploaded
+            if (isset($_FILES['hero_imgs']['name'][$i]) && $_FILES['hero_imgs']['error'][$i] === UPLOAD_ERR_OK) {
+                $ext = pathinfo($_FILES['hero_imgs']['name'][$i], PATHINFO_EXTENSION);
+                $filename = 'hero_' . time() . '_' . $i . '.' . $ext;
+                $filepath = $upload_dir . $filename;
+                if (move_uploaded_file($_FILES['hero_imgs']['tmp_name'][$i], $filepath)) {
+                    $bg_img = $filepath;
+                }
+            }
+            if (!empty($bg_img)) {
+                $hero_images[] = $bg_img;
+            }
+        }
+        $data['hero_images'] = $hero_images;
+    }
     // Handle Mentors Array
     if (isset($_POST['mentor_name']) && is_array($_POST['mentor_name'])) {
         $mentors = [];
@@ -191,6 +209,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     // GENERATE index.html
     $template = file_get_contents($template_file);
+
+    // Generate Hero Background Slider HTML
+    $hero_bg_html = '';
+    if (isset($data['hero_images']) && is_array($data['hero_images']) && count($data['hero_images']) > 0) {
+        foreach ($data['hero_images'] as $bg_img) {
+            $hero_bg_html .= '
+                <div class="hero-bg-slide" style="background-image: url(\'' . $bg_img . '\');"></div>';
+        }
+    } else if (isset($data['img_hero'])) {
+        // Fallback to old format
+        $hero_bg_html = '
+                <div class="hero-bg-slide" style="background-image: url(\'' . $data['img_hero'] . '\');"></div>';
+    }
+    $template = str_replace('{{hero_bg_html}}', $hero_bg_html, $template);
 
     // Generate Mentors HTML
     $mentors_html = '';
@@ -499,7 +531,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 <!-- BERANDA (HERO) -->
                 <div id="group-hero" class="section-group">
                     <h3 class="section-title">Bagian Beranda (Atas)</h3>
-                    <?php renderImageUpload($data, 'img_hero', 'Gambar Latar Belakang (Hero)'); ?>
+                    <div id="hero-images-container">
+                        <?php
+                        $hero_images = isset($data['hero_images']) ? $data['hero_images'] : (isset($data['img_hero']) ? [$data['img_hero']] : []);
+                        foreach ($hero_images as $index => $bg):
+                            ?>
+                            <div class="mentor-item" style="border:1px solid #cbd5e1; padding:1.5rem; margin-bottom:1rem; border-radius:8px; position:relative;">
+                                <button type="button" class="btn-remove" onclick="this.parentElement.remove()" style="position:absolute; top:10px; right:10px; background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;"><i class="fa-solid fa-trash"></i> Hapus</button>
+                                
+                                <div class="form-group">
+                                    <label>Gambar Latar Belakang <?= $index + 1 ?></label>
+                                    <?php if ($bg): ?>
+                                        <div style="margin-bottom: 0.5rem;"><img src="<?= htmlentities($bg) ?>" style="height: 100px; border-radius: 8px; object-fit: cover;"></div>
+                                    <?php endif; ?>
+                                    <input type="hidden" name="existing_hero_img[]" value="<?= htmlentities($bg) ?>">
+                                    <input type="file" name="hero_imgs[]" accept="image/*">
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <button type="button" class="btn-add" onclick="addHeroImage()" style="margin-top:1rem; background: #10b981; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-plus"></i> Tambah Background</button>
+                    
+                    <script>
+                        function addHeroImage() {
+                            const container = document.getElementById('hero-images-container');
+                            const index = container.children.length + 1;
+                            const html = `
+                                <div class="mentor-item" style="border:1px solid #cbd5e1; padding:1.5rem; margin-bottom:1rem; border-radius:8px; position:relative;">
+                                    <button type="button" class="btn-remove" onclick="this.parentElement.remove()" style="position:absolute; top:10px; right:10px; background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;"><i class="fa-solid fa-trash"></i> Hapus</button>
+                                    
+                                    <div class="form-group">
+                                        <label>Gambar Latar Belakang Baru</label>
+                                        <input type="hidden" name="existing_hero_img[]" value="">
+                                        <input type="file" name="hero_imgs[]" accept="image/*" required>
+                                    </div>
+                                </div>
+                            `;
+                            container.insertAdjacentHTML('beforeend', html);
+                        }
+                    </script>
                     <?php renderInput($data, 'hero_title', 'Judul Besar'); ?>
                     <?php renderTextarea($data, 'hero_desc', 'Deskripsi Pendek'); ?>
                 </div>

@@ -1,7 +1,11 @@
 {
   "site_title": "PT Aksara Vidya Indonesia — Pendidikan, Pelatihan & Publikasi Ilmiah",
   "meta_desc": "PT Aksara Vidya Indonesia adalah perusahaan unggul dalam pengembangan pendidikan, pelatihan, publikasi ilmiah, dan penerbitan karya akademik.",
-  "img_hero": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+  "hero_images": [
+    "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+    "https://images.unsplash.com/photo-1515187029135-18ee286d815b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+    "uploads/hut_ri_81.png"
+  ],
   "hero_title": "Kembangkan Potensimu<br>Bersama Aksara Vidya Indonesia",
   "hero_desc": "Lembaga pendidikan dan pelatihan terdepan yang fokus pada pengembangan keterampilan praktis, edukasi berkualitas, dan penelitian ilmiah.",
   "wa_number": "6281998199884",
@@ -91,6 +95,18 @@
       "spec": "Rekayasa & Teknologi",
       "desc": "Pakar di bidang rekayasa teknologi dan fabrikasi dengan pengalaman luas dalam perancangan serta pengembangan instrumen inovatif.",
       "img": "https://i.pravatar.cc/150?u=a04258a2462d826712d"
+    },
+    {
+      "name": "Imam Tri Harsoyo, S.Pd., M.Si",
+      "spec": "Pakar Akademik",
+      "desc": "Ahli di bidang akademik dan penelitian dengan dedikasi tinggi dalam pendidikan.",
+      "img": "https://placehold.co/400x500"
+    },
+    {
+      "name": "Sri Wahyuni Ningsih, S.KM., M.KM",
+      "spec": "Kesehatan Masyarakat",
+      "desc": "Profesional di bidang kesehatan masyarakat dengan pengalaman empiris dan teoritis.",
+      "img": "https://placehold.co/400x500"
     }
   ],
   "img_jurnal_logo": "https://placehold.co/150",
