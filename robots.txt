@@ -1,3 +1,9 @@
 User-agent: *
 Allow: /
+
+# Proteksi CMS dan berkas internal
+Disallow: /admin.php
+Disallow: /data.json
+Disallow: /template.html
+
 Sitemap: https://aksaravidyaindonesia.com/sitemap.xml

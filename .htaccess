@@ -3,6 +3,12 @@
   AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application/xml application/xhtml+xml application/rss+xml application/javascript application/x-javascript image/svg+xml
 </IfModule>
 
+# MIME types
+<IfModule mod_mime.c>
+  AddType application/xml .xml
+  AddType text/plain .txt
+</IfModule>
+
 # Optimize Performance: Leverage Browser Caching
 <IfModule mod_expires.c>
   ExpiresActive On
@@ -14,17 +20,25 @@
   ExpiresByType application/pdf "access plus 1 month"
   ExpiresByType application/javascript "access plus 1 month"
   ExpiresByType application/x-javascript "access plus 1 month"
-  ExpiresByType application/x-shockwave-flash "access plus 1 month"
   ExpiresByType image/x-icon "access plus 1 year"
-  ExpiresDefault "access plus 2 days"
+  ExpiresByType text/xml "access plus 1 hour"
+  ExpiresByType application/xml "access plus 1 hour"
 </IfModule>
 
-# Optimize Performance: Cache-Control Headers
+# Cache-Control: Beri cache untuk aset statis, jangan cache robots.txt & sitemap.xml secara agresif agar bot selalu baca yang terbaru
 <IfModule mod_headers.c>
-  <FilesMatch "\.(js|css|xml|gz|html)$">
-    Header append Cache-Control "max-age=2592000, public"
+  <FilesMatch "\.(js|css)$">
+    Header set Cache-Control "max-age=2592000, public"
   </FilesMatch>
-  <FilesMatch "\.(ico|jpe?g|png|gif|swf|svg)$">
-    Header append Cache-Control "max-age=31536000, public"
+  <FilesMatch "\.(ico|jpe?g|png|gif|svg)$">
+    Header set Cache-Control "max-age=31536000, public"
+  </FilesMatch>
+  <FilesMatch "^(robots\.txt|sitemap\.xml)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
   </FilesMatch>
 </IfModule>
+
+# Proteksi file konfigurasi cPanel & environment
+<FilesMatch "^\.cpanel\.ya?ml$">
+  Require all denied
+</FilesMatch>
