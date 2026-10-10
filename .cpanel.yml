@@ -2,4 +2,5 @@
 deployment:
   tasks:
     - export DEPLOYPATH=$HOME/public_html/aksaravidyaindonesia.com/
-    - /bin/cp -R * $DEPLOYPATH
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R index.html admin.php css img uploads favicon.png logo.png skillup-logo.png robots.txt sitemap.xml .htaccess google2b9c4ec65e898880.html data.json template.html $DEPLOYPATH
